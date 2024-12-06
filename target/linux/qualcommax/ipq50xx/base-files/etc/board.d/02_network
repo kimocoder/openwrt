@@ -27,7 +27,7 @@ ipq50xx_setup_macs()
 			label_mac=$(mtd_get_mac_ascii devinfo hw_mac_addr)
 			lan_mac=$label_mac
 			wan_mac=$label_mac
-			ucidef_set_network_device_mac eth1 $label_mac
+			ucidef_set_network_device_mac eth0 $label_mac
 		;;
 	esac
 
