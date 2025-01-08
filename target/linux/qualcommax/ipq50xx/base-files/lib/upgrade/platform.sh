@@ -11,7 +11,8 @@ platform_check_image() {
 platform_do_upgrade() {
 	case "$(board_name)" in
 	linksys,mx2000|\
-	linksys,mx5500)
+	linksys,mx5500|\
+	linksys,spnmx56)
 		boot_part="$(fw_printenv -n boot_part)"
 		if [ "$boot_part" -eq "1" ]; then
 			fw_setenv boot_part 2
