@@ -30,3 +30,17 @@ define Device/linksys_mx5500
 					ipq-wifi-linksys_mx5500
 endef
 TARGET_DEVICES += linksys_mx5500
+
+define Device/wallys_dr5018
+	SOC := ipq5018
+	DEVICE_MODEL := DR5018
+	DEVICE_VARIANT := NAND
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	IMAGE_SIZE := 129408k
+	UBINIZE_OPTS := -E 5
+	IMAGES := factory.bin
+	IMAGE/factory.bin := append-ubi | check-size | ubinize-image -s 2048
+	DEVICE_PACKAGES := kmod-qca-nss-dp kmod-usb3 kmod-usb-dwc3 kmod-usb-dwc3-qcom kmod-usb-phy
+endef
+TARGET_DEVICES += wallys_dr5018

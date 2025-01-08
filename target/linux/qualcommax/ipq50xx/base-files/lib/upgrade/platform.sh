@@ -14,6 +14,11 @@ platform_do_upgrade() {
 	linksys,mx5500)
 		platform_do_upgrade_linksys "$1"
 		;;
+        wally,dr5018)
+                CI_KERNPART="0:HLOS"
+                CI_ROOTPART="rootfs"
+                emmc_do_upgrade "$1"
+                ;;
 	*)
 		default_do_upgrade "$1"
 		;;

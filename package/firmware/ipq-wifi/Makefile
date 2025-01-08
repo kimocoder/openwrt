@@ -41,7 +41,7 @@ ALLWIFIBOARDS:= \
 	linksys_mx2000 \
 	linksys_mx4200 \
 	linksys_mx5300 \
-  linksys_mx5500 \
+	linksys_mx5500 \
 	linksys_mx8500 \
 	linksys_whw03 \
 	netgear_lbr20 \
@@ -60,6 +60,7 @@ ALLWIFIBOARDS:= \
 	tplink_eap620hd-v1 \
 	tplink_eap660hd-v1 \
 	wallys_dr40x9 \
+	wallys_dr5018 \
 	xiaomi_ax3600 \
 	xiaomi_ax9000 \
 	yyets_le1 \
@@ -196,6 +197,7 @@ $(eval $(call generate-ipq-wifi-package,spectrum_sax1v1k,Spectrum SAX1V1K))
 $(eval $(call generate-ipq-wifi-package,tplink_eap620hd-v1,TP-Link EAP620 HD v1))
 $(eval $(call generate-ipq-wifi-package,tplink_eap660hd-v1,TP-Link EAP660 HD v1))
 $(eval $(call generate-ipq-wifi-package,wallys_dr40x9,Wallys DR40X9))
+$(eval $(call generate-ipq-wifi-package,wallys_dr5018,Wallys DR5018))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax3600,Xiaomi AX3600))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax9000,Xiaomi AX9000))
 $(eval $(call generate-ipq-wifi-package,yyets_le1,YYeTs LE1))
