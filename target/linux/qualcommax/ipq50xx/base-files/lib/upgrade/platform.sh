@@ -44,4 +44,5 @@ platform_do_upgrade() {
         default_do_upgrade "$1"
         ;;
     esac
+	return 0;
 }
