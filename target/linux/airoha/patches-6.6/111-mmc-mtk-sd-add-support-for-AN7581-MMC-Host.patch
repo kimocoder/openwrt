@@ -103,7 +103,7 @@ Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
  
  	host->bus_clk = devm_clk_get_optional(&pdev->dev, "bus_clk");
  	if (IS_ERR(host->bus_clk))
-@@ -2731,10 +2758,13 @@ static int msdc_drv_probe(struct platfor
+@@ -2731,10 +2758,14 @@ static int msdc_drv_probe(struct platfor
  		return PTR_ERR(host->pins_default);
  	}
  
@@ -121,7 +121,7 @@ Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
  	}
  
  	/* Support for SDIO eint irq ? */
-@@ -2815,6 +2845,12 @@ static int msdc_drv_probe(struct platfor
+@@ -2815,6 +2846,12 @@ static int msdc_drv_probe(struct platfor
  		dev_err(&pdev->dev, "Cannot ungate clocks!\n");
  		goto release_clk;
  	}
