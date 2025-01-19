@@ -61,7 +61,8 @@ ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq60xx")
 endif
 
 ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq50xx")
-    MAKE_FLAGS+= CHIP_TYPE=MP
+    MAKE_FLAGS+= CHIP_TYPE=MP \
+                 IN_AQUANTIA_PHY=TRUE
 endif
 
 define Build/Compile
