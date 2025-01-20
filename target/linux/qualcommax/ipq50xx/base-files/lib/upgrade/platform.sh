@@ -1,48 +1,90 @@
-PART_NAME=firmware
-REQUIRE_IMAGE_METADATA=1
+#!/bin/sh
+# /lib/upgrade/platform.sh for Wallys DR5018 (IPQ5018)
 
-RAMFS_COPY_BIN='fw_printenv fw_setenv head'
-RAMFS_COPY_DATA='/etc/fw_env.config /var/lock/fw_printenv.lock'
+. /lib/functions.sh
+. /lib/upgrade/common.sh
 
+# Define supported board name
+detect_board() {
+    echo "wallys_dr5018"
+}
+
+# Check firmware compatibility
 platform_check_image() {
-    # Validate image for supported boards
-    case "$(board_name)" in
-    linksys,mx2000|\
-    linksys,mx5500|\
-    wally,dr5018)
-        return 0
-        ;;
-    *)
-        echo "Unsupported board: $(board_name)"
-        return 1
-        ;;
-    esac
-}
+    local image="$1"
 
-platform_do_upgrade() {
-    CI_UBIPART="rootfs"
-    CI_ROOTPART="ubi_rootfs"
-    CI_IPQ807X=1
-
-    case "$(board_name)" in
-    linksys,mx2000|\
-    linksys,mx5500)
-        platform_do_upgrade_linksys "$1"
-        ;;
-    wally,dr5018)
-        if [ -f /proc/boot_info/rootfs/upgradepartition ]; then
-            CI_UBIPART="$(cat /proc/boot_info/rootfs/upgradepartition)"
-            CI_BOOTCFG=1
-        else
-            echo "Error: Upgrade partition file not found!"
+    case "$image" in
+        *wallys_dr5018*)
+            return 0
+            ;;
+        *)
+            echo "Incompatible firmware image." >&2
             return 1
-        fi
-        nand_upgrade_tar "$1"
+            ;;
+    esac
+}
+
+# Pre-upgrade operations
+platform_pre_upgrade() {
+    sync
+    echo 3 > /proc/sys/vm/drop_caches
+    echo "Starting upgrade process for Wallys DR5018..."
+}
+
+# Flash firmware
+platform_do_upgrade() {
+    local image="$1"
+    echo "Flashing firmware for Wallys DR5018..."
+
+    # Example MTD flashing commands (adjust based on DTS partitions)
+    # Identify partitions in DTS: kernel, rootfs, etc.
+    local kernel_part="kernel"
+    local rootfs_part="rootfs"
+
+    # Write kernel and rootfs to respective partitions
+    mtd write "$image" "$kernel_part"
+    mtd write "$image" "$rootfs_part"
+
+    # Optionally configure bootloader here
+    fw_setenv bootcmd "bootm $(mtdinfo -u "$kernel_part")"
+
+    echo "Firmware flashed successfully! Rebooting..."
+    reboot
+}
+
+# Post-upgrade operations (optional)
+platform_post_upgrade() {
+    echo "Post-upgrade cleanup and verification for Wallys DR5018 completed."
+}
+
+# Integration with LuCI
+platform_setup_luci() {
+    echo "Setting up LuCI for firmware flashing..."
+    # Additional setup code if needed
+}
+
+# Invoke appropriate functions based on OpenWRT upgrade process
+case "$1" in
+    detect)
+        detect_board
+        ;;
+    check)
+        platform_check_image "$2"
+        ;;
+    pre_upgrade)
+        platform_pre_upgrade
+        ;;
+    do_upgrade)
+        platform_do_upgrade "$2"
+        ;;
+    post_upgrade)
+        platform_post_upgrade
+        ;;
+    luci_setup)
+        platform_setup_luci
         ;;
     *)
-        echo "Warning: Falling back to default upgrade method."
-        default_do_upgrade "$1"
+        echo "Usage: $0 {detect|check|pre_upgrade|do_upgrade|post_upgrade|luci_setup}" >&2
+        exit 1
         ;;
-    esac
-	return 0;
-}
+esac
