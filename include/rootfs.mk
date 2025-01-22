@@ -48,6 +48,7 @@ apk = \
   $(FAKEROOT) $(STAGING_DIR_HOST)/bin/apk \
 	--root $(1) \
 	--keys-dir $(if $(APK_KEYS),$(APK_KEYS),$(TOPDIR)) \
+	--no-cache \
 	--no-logfile \
 	--preserve-env
 
