@@ -1,0 +1,17 @@
+#!/bin/sh
+
+. /lib/functions/uci-defaults.sh
+
+board_config_update
+
+board=$(board_name)
+
+case $board in
+        wallys,dr5018)
+                ucidef_set_led_netdev "wan" "wan" "green:uplink" "eth0"
+                ;;
+esac
+
+board_config_flush
+
+exit 0

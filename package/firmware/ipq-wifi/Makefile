@@ -37,15 +37,16 @@ ALLWIFIBOARDS:= \
 	dynalink_dl-wrx36 \
 	edgecore_eap102 \
 	edimax_cax1800 \
+	wallys_dr5018 \
 	linksys_homewrk \
-  linksys_mr5500 \
+	linksys_mr5500 \
 	linksys_mr7350 \
-  linksys_mx2000 \
+	linksys_mx2000 \
 	linksys_mx4200 \
 	linksys_mx5300 \
-  linksys_mx5500 \
+	linksys_mx5500 \
 	linksys_mx8500 \
-  linksys_spnmx56 \
+	linksys_spnmx56 \
 	linksys_whw03 \
 	netgear_lbr20 \
 	netgear_rax120v2 \
@@ -204,6 +205,7 @@ $(eval $(call generate-ipq-wifi-package,tplink_eap610-outdoor,TPLink EAP610-Outd
 $(eval $(call generate-ipq-wifi-package,tplink_eap620hd-v1,TP-Link EAP620 HD v1))
 $(eval $(call generate-ipq-wifi-package,tplink_eap660hd-v1,TP-Link EAP660 HD v1))
 $(eval $(call generate-ipq-wifi-package,wallys_dr40x9,Wallys DR40X9))
+$(eval $(call generate-ipq-wifi-package,wallys_dr5018,Wallys DR5018))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax3600,Xiaomi AX3600))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax9000,Xiaomi AX9000))
 $(eval $(call generate-ipq-wifi-package,yyets_le1,YYeTs LE1))
