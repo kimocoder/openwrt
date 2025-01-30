@@ -3,39 +3,64 @@ include $(INCLUDE_DIR)/image.mk
 
 define Device/Default
 	PROFILES := Default
-	KERNEL_LOADADDR := 0x41000000
+	DTS_DIR := $(LINUX_DIR)/arch/$(LINUX_KARCH)/boot/dts/$(if $(CONFIG_TARGET_ipq50xx_generic),qcom)
+	KERNEL_DEPENDS = $$(wildcard $(DTS_DIR)/$$(DEVICE_DTS).dts)
+	KERNEL_LOADADDR := $(if $(CONFIG_TARGET_ipq50xx_generic),0x41080000,0x41208000)
 	DEVICE_DTS = $$(SOC)-$(lastword $(subst _, ,$(1)))
-	DEVICE_DTS_CONFIG := config@1
-	DEVICE_DTS_DIR := $(DTS_DIR)/qcom
+	DEVICE_DTS_CONFIG := config-1
 	IMAGES := sysupgrade.bin
 	IMAGE/sysupgrade.bin = sysupgrade-tar | append-metadata
 	IMAGE/sysupgrade.bin/squashfs :=
 endef
 
 define Device/FitImage
-	KERNEL_SUFFIX := -uImage.itb
-	KERNEL = kernel-bin | libdeflate-gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
+	KERNEL_SUFFIX := -fit-uImage.itb
+	KERNEL = kernel-bin | gzip | fit gzip $$(DTS_DIR)/$$(DEVICE_DTS).dtb
 	KERNEL_NAME := Image
 endef
 
 define Device/FitImageLzma
-	KERNEL_SUFFIX := -uImage.itb
-	KERNEL = kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(DEVICE_DTS).dtb
+	KERNEL_SUFFIX := -fit-uImage.itb
+	KERNEL = kernel-bin | lzma | fit lzma $$(DTS_DIR)/$$(DEVICE_DTS).dtb
 	KERNEL_NAME := Image
 endef
 
-define Device/EmmcImage
-	IMAGES += factory.bin
-	IMAGE/factory.bin := append-rootfs | pad-rootfs | pad-to 64k
-	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to 64k | sysupgrade-tar rootfs=$$$$@ | append-metadata
+define Device/MultiDTBFitImage
+	KERNEL_SUFFIX := -fit-uImage.itb
+	KERNEL = kernel-bin | lzma | MultiDTBFIT
+	DEVICE_DTS =
+	KERNEL_INITRAMFS =
 endef
 
-define Device/UbiFit
-	KERNEL_IN_UBI := 1
-	IMAGES += factory.ubi
-	IMAGE/factory.ubi := append-ubi
+#include generic.mk
+
+FindDeviceTrees ?= $(notdir $(basename $(shell find $(DTS_DIR)/ -name $(1)*.dtb $(2) 2>/dev/null)))
+
+define Image/Build/squashfs
+	$(call prepare_generic_squashfs,$(KDIR)/root.squashfs)
 endef
 
-include $(SUBTARGET).mk
+define Image/Build
+	$(call Image/Build/$(1),$(1))
+	dd if=$(KDIR)/root$(2).$(1) of=$(BIN_DIR)/$(IMG_PREFIX)-$(1)-root$(3).img bs=2k conv=sync
+endef
+
+define Build/MkFITMulti
+	$(TOPDIR)/scripts/mkits.sh \
+		-D $(1) -o $(KDIR)/fit-$(1).its -k $(2) $(foreach dtb,$(subst \",,$(3)), -d $(DTS_DIR)/$(dtb).dtb$(if $(7),.gz)) -C $(4) -a $(5) -e $(6) $(if $(7),-x $(7) -l $(8))\
+		-A $(LINUX_KARCH) -v $(LINUX_VERSION)
+	PATH=$(LINUX_DIR)/scripts/dtc:$(PATH) mkimage -f $(KDIR)/fit-$(1).its $(KDIR)/$(1)$(KERNEL_SUFFIX)
+endef
+
+define Build/MultiDTBFIT
+	$(call Build/MkFITMulti,qcom_mpxx,$@,$(call FindDeviceTrees, ipq5018-), lzma, $(KERNEL_LOADADDR),$(KERNEL_LOADADDR))
+	mkdir -p $(BIN_DIR)/debug/modules
+	mkdir -p $(BIN_DIR)/dtbs
+	$(CP) $(STAGING_DIR_ROOT)/lib/modules/$(LINUX_VERSION)/* $(BIN_DIR)/debug/modules/
+	$(CP) $(KDIR)/vmlinux.debug $(BIN_DIR)/$(IMG_PREFIX)-vmlinux.elf
+	$(CP) $(KDIR)/vmlinux-initramfs.debug $(BIN_DIR)/$(IMG_PREFIX)-vmlinux-initramfs.elf
+	$(CP) $(KDIR)/Image* $(BIN_DIR)/dtbs/
+	$(CP) $(DTS_DIR)/ipq50*.dtb $(BIN_DIR)/dtbs/
+endef
 
 $(eval $(call BuildImage))

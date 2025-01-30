@@ -27,6 +27,7 @@
 			clock-names = "core_clk\0core_a_clk";
 			clocks = <0x02 0x61 0x02 0x5e>;
 			compatible = "arm,coresight-cti";
+			status = "okay";
 		};
 
 		funnel@6041000 {
@@ -37,6 +38,7 @@
 			clocks = <0x02 0x61 0x02 0x5e>;
 			compatible = "arm,primecell";
 			arm,primecell-periphid = <0x3b908>;
+			status = "okay";
 
 			ports {
 				#size-cells = <0x00>;
@@ -146,6 +148,8 @@
 			qcom,dedicated-io = <0x01>;
 			qcom,cpu-dma-latency-us = <0x2bd>;
 			qcom,msm-bus,vectors-KBps = <0x4e 0x200 0x00 0x00 0x4e 0x200 0x416 0xc80 0x4e 0x200 0xcc3e 0x27100 0x4e 0x200 0xff50 0x30d40 0x4e 0x200 0x1fe9e 0x61a80 0x4e 0x200 0x3fd3e 0xc3500 0x4e 0x200 0x3fd3e 0xc3500 0x4e 0x200 0x3fd3e 0xc3500 0x4e 0x200 0x146cc2 0x3e8000>;
+			pinctrl-0 = <>;
+			pinctrl-names = "default";
 		};
 
 		tmc@6048000 {
@@ -163,6 +167,7 @@
 			arm,buffer-size = <0x100000>;
 			arm,primecell-periphid = <0x3b961>;
 			memory_region = <0x18>;
+			status = "okay";
 
 			port {
 
@@ -179,6 +184,7 @@
 			mdiobus = <0x08>;
 			phy_addr = <0x1c>;
 			compatible = "qcom,nss-macsec";
+			status = "disabled";
 		};
 
 		qti,qgic2m-msi_0 {
@@ -197,6 +203,7 @@
 			clock-names = "core_clk\0core_a_clk";
 			clocks = <0x02 0x61 0x02 0x5e>;
 			compatible = "arm,coresight-cti";
+			status = "okay";
 		};
 
 		cti@6017000 {
@@ -206,6 +213,7 @@
 			clock-names = "core_clk\0core_a_clk";
 			clocks = <0x02 0x61 0x02 0x5e>;
 			compatible = "arm,coresight-cti";
+			status = "okay";
 		};
 
 		cti@6019000 {
@@ -215,6 +223,7 @@
 			clock-names = "core_clk\0core_a_clk";
 			clocks = <0x02 0x61 0x02 0x5e>;
 			compatible = "arm,coresight-cti";
+			status = "okay";
 		};
 
 		replicator@6046000 {
@@ -225,6 +234,7 @@
 			clocks = <0x02 0x61 0x02 0x5e>;
 			compatible = "arm,primecell";
 			arm,primecell-periphid = <0x3b909>;
+			status = "okay";
 
 			ports {
 				#size-cells = <0x00>;
