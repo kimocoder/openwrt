@@ -133,25 +133,30 @@ static int ubootenv_probe(struct platform_device *pdev)
 	return misc_register(&data->misc);
 }
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
-static int ubootenv_remove(struct platform_device *pdev)
+static
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
+int
 #else
-static void ubootenv_remove(struct platform_device *pdev)
+void
 #endif
+ubootenv_remove(struct platform_device *pdev)
 {
 	struct ubootenv_drvdata *data = platform_get_drvdata(pdev);
 
 	data->env = NULL;
 	misc_deregister(&data->misc);
-
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
 	return 0;
 #endif
 }
 
 static struct platform_driver ubootenv_driver = {
 	.probe = ubootenv_probe,
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
 	.remove = ubootenv_remove,
+#else
+	.remove_new = ubootenv_remove,
+#endif
 	.driver = {
 		.name           = NAME,
 		.of_match_table = of_ubootenv_match,

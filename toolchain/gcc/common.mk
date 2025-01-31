@@ -26,7 +26,11 @@ PKG_VERSION:=$(firstword $(subst +, ,$(GCC_VERSION)))
 GCC_MAJOR_VERSION:=$(word 1,$(subst ., ,$(PKG_VERSION)))
 GCC_DIR:=$(PKG_NAME)-$(PKG_VERSION)
 
-PKG_SOURCE_URL:=@GNU/gcc/gcc-$(PKG_VERSION)
+ifeq ($(PKG_VERSION),15.0.0)
+  PKG_SOURCE_URL:=https://us.cooluc.com/gcc/20241103
+else
+  PKG_SOURCE_URL:=@GNU/gcc/gcc-$(PKG_VERSION)
+endif
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_CPE_ID:=cpe:/a:gnu:gcc
 
@@ -44,6 +48,10 @@ endif
 
 ifeq ($(PKG_VERSION),14.2.0)
   PKG_HASH:=a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9
+endif
+
+ifeq ($(PKG_VERSION),15.0.0)
+  PKG_HASH:=da4db21566241844d14b5b2caad4e2cfccbcbe656f10c0b929eea68dfe807ca3
 endif
 
 PATCH_DIR=../patches-$(GCC_MAJOR_VERSION).x

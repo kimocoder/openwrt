@@ -674,10 +674,11 @@ static void gpio_keys_irq_close(struct gpio_keys_button_dev *bdev)
 	}
 }
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
-static int gpio_keys_remove(struct platform_device *pdev)
-#else
+
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 11, 0)
 static void gpio_keys_remove(struct platform_device *pdev)
+#else
+static int gpio_keys_remove(struct platform_device *pdev)
 #endif
 {
 	struct gpio_keys_button_dev *bdev = platform_get_drvdata(pdev);
@@ -689,7 +690,7 @@ static void gpio_keys_remove(struct platform_device *pdev)
 	else
 		gpio_keys_irq_close(bdev);
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
 	return 0;
 #endif
 }

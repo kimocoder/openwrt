@@ -125,6 +125,17 @@ ifneq (,$(KERNEL_CC))
   KERNEL_MAKE_FLAGS += CC="$(KERNEL_CC)"
 endif
 
+ifneq (,$(findstring clang,$(KERNEL_CC)))
+  ifneq (,$(filter clang-%,$(KERNEL_CC)))
+    LLVM := $(subst clang-,,$(KERNEL_CC))
+    LLVM_LLD := ld.lld-$(subst clang-,,$(KERNEL_CC))
+  else
+    LLVM := 1
+    LLVM_LLD := ld.lld
+  endif
+  KERNEL_MAKE_FLAGS += LD="$(LLVM_LLD)" LLVM=$(LLVM) LLVM_IAS=1
+endif
+
 KERNEL_NOSTDINC_FLAGS = \
 	-nostdinc $(if $(DUMP),, -isystem $(shell $(TARGET_CC) -print-file-name=include))
 
