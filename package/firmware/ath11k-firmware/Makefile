@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=ath11k-firmware
 PKG_SOURCE_DATE:=2025-01-30
 PKG_SOURCE_VERSION:=1f00dcfc723ffeb3e897d59e7134cf2ce302a724
-PKG_MIRROR_HASH:=de8c505c5184d9b555b474b81b9d55b11c16e3e18e56ac6e9852b354cb72f0f0
+PKG_MIRROR_HASH:=2af2cdec4543270e66df77fe352bfa43680b8d27a6863bbd6af68a83391b543c
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
@@ -82,6 +82,7 @@ endef
 
 define Build/Prepare
 	$(eval $(call Download,ath11k-legacy-firmware))
+	
 	$(call Build/Prepare/Default,)
 
 	$(TAR) -C $(BUILD_DIR) -xf $(DL_DIR)/$(ATH11K_LEGACY_FW_SOURCE)
