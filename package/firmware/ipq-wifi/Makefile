@@ -114,7 +114,7 @@ define ipq-wifi-install-one
   $(if $(filter $(suffix $(1)),.IPQ8074 .ipq8074),\
     $(call ipq-wifi-install-ath11-one-to,$(1),$(2),IPQ8074/hw2.0),\
   $(if $(filter $(suffix $(1)),.QCN6122 .qcn6122),\
-    $(call ipq-wifi-install-ath11-one-to,$(1),$(2),QCN6122/hw1.0),\
+    $(call ipq-wifi-install-ath11-one-to,$(1),$(2),qcn6122/hw1.0),\
   $(if $(filter $(suffix $(1)),.QCN9074 .qcn9074),\
     $(call ipq-wifi-install-ath11-one-to,$(1),$(2),QCN9074/hw1.0),\
     $(error Unrecognized board-file suffix '$(suffix $(1))' for '$(1)')\

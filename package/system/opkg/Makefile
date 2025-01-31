@@ -24,7 +24,8 @@ PKG_MAINTAINER:=Jo-Philipp Wich <jo@mein.io>
 # Extend depends from version.mk
 PKG_CONFIG_DEPENDS += \
 	CONFIG_SIGNATURE_CHECK \
-	CONFIG_TARGET_INIT_PATH
+	CONFIG_TARGET_INIT_PATH \
+	CONFIG_OPKG_USE_CURL
 
 HOST_BUILD_DEPENDS:=libubox/host
 
@@ -42,6 +43,15 @@ define Package/opkg
   DEFAULT:=y if !USE_APK
   URL:=$(PKG_SOURCE_URL)
   MENU:=1
+endef
+
+define Package/opkg/config
+  menu "Downloader"
+    config OPKG_USE_CURL
+    bool
+      default n
+    prompt "Use curl for downloading packages (default: wget)"
+  endmenu
 endef
 
 define Package/opkg/description

@@ -43,13 +43,13 @@ MAKE_FLAGS+= \
 	ARCH=$(LINUX_KARCH) \
 	TARGET_SUFFIX=$(CONFIG_TARGET_SUFFIX) \
 	GCC_VERSION=$(GCC_VERSION) \
-	EXTRA_CFLAGS="-fno-stack-protector -I$(STAGING_DIR)/usr/include" \
+	EXTRA_CFLAGS='-Wno-missing-declarations -Wno-missing-prototypes -fno-PIC -fno-stack-protector -I$(STAGING_DIR)/usr/include' \
 	SoC=$(CONFIG_TARGET_SUBTARGET) \
 	SHELL="$(BASH)" \
 	PTP_FEATURE=disable SWCONFIG_FEATURE=disable \
 	ISISC_ENABLE=disable MHT_ENABLE=disable \
 	IN_QCA803X_PHY=FALSE IN_QCA808X_PHY=FALSE \
-	IN_MALIBU_PHY=FALSE IN_MP_PHY=FALSE \
+	IN_MALIBU_PHY=FALSE \
 	$(LNX_CONFIG_OPTS)
 
 ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq807x")
@@ -61,7 +61,7 @@ ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq60xx")
 endif
 
 ifeq ($(CONFIG_TARGET_SUBTARGET), "ipq50xx")
-    MAKE_FLAGS+= CHIP_TYPE=MP
+    MAKE_FLAGS+= CHIP_TYPE=MP IN_QCA808X_PHY=TRUE IN_MISC=TRUE IN_STP=TRUE IN_VSI=TRUE IN_FDB=TRUE
 endif
 
 define Build/Compile
