@@ -17,9 +17,9 @@ linksys,spnmx56)
 		ubootenv_add_uci_config "/dev/mtd$idx" "0x0" "0x40000" "0x20000" "2"
 	;;
 wallys,dr5018)
-        idx="$(find_mtd_index 0:appsblenv)"
+        idx="$(find_mtd_index 0:APPSBLENV)"
         [ -n "$idx" ] && \
-                ubootenv_add_uci_config "/dev/mtd$idx" "0x0" "0x20000" "0x20000" "1"
+                ubootenv_add_uci_config "/dev/mtd$idx" "0x0" "0x10000" "0x20000" "2"
         ;;
 esac
 

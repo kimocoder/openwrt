@@ -108,6 +108,7 @@ define Kernel/SetNoInitramfs
 	echo 'CONFIG_INITRAMFS_SOURCE=""' >> $(LINUX_DIR)/.config.set
 	echo '# CONFIG_INITRAMFS_FORCE is not set' >> $(LINUX_DIR)/.config.set
 	echo "# CONFIG_INITRAMFS_PRESERVE_MTIME is not set" >> $(LINUX_DIR)/.config.set
+	echo '# CONFIG_FSCACHE is not set' >> $(LINUX_DIR)/.config.set
 endef
 
 define Kernel/Configure/Default

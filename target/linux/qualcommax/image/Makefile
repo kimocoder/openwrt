@@ -19,6 +19,13 @@ define Device/FitImage
 	KERNEL_NAME := Image
 endef
 
+define Device/FactoryImage
+	KERNEL_SUFFIX := -uImage.itb
+	KERNEL_NAME := Image
+  	KERNEL = kernel-bin | gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
+  	KERNEL_INITRAMFS = kernel-bin | gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
+endef
+
 define Device/FitImageLzma
 	KERNEL_SUFFIX := -fit-uImage.itb
 	KERNEL = kernel-bin | lzma | fit lzma $$(DTS_DIR)/$$(DEVICE_DTS).dtb

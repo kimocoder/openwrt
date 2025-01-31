@@ -66,19 +66,43 @@ endef
 TARGET_DEVICES += linksys_spnmx56
 
 define Device/wallys_dr5018
-        $(call Device/FitImageLzma)
-        DEVICE_VENDOR := Wallys
-        DEVICE_MODEL := DR5018
-        DEVICE_VARIANT := C1
-        BOARD_NAME := ap-mp03.5-c1
-        BUILD_DTS_ipq5018-mp03.5-c1 := 1
-        SOC := ipq5018
-        KERNEL_INSTALL := 1
-        KERNEL_SIZE := 6096k
-        IMAGE_SIZE := 25344k
-        IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
+  	$(call Device/FactoryImage)
+  	$(call Device/FitImage)
+  	$(call Device/UbiFit)
+	DEVICE_VENDOR := Wallys
+  	DEVICE_MODEL := DR5018
+  	KERNEL_LOADADDR := 0x41000000
+  	BLOCKSIZE := 128k
+  	PAGESIZE := 2048
+  	SOC := ipq5018
+  	UBINIZE_OPTS := -E 5	# EOD marks to "hide" factory sig at EOF
+  	DEVICE_DTS_CONFIG:=config@mp03.5-c1
+  	SUPPORTED_DEVICES:=dr5018, wallys,dr5018
+  	IMAGES := sysupgrade.tar nand-factory.img factory.ubi factory.bin
+  	IMAGE/sysupgrade.tar := sysupgrade-tar | append-metadata
+  	IMAGE/nand-factory.img := append-ubi | qsdk-ipq-factory-nand | append-metadata
+  	IMAGE/factory.ubi := append-ubi
+  	IMAGE/factory.bin := append-ubi | append-metadata
+  	DEVICE_PACKAGES := \
+  	ath11k-firmware-qcn6122 \
+  	ipq-wifi-wallys-dr5018
 endef
-TARGET_DEVICES += $(wallys_dr5018)
+TARGET_DEVICES += wallys_dr5018
+
+#define Device/wallys_dr5018
+#        $(call Device/FitImageLzma)
+#        DEVICE_VENDOR := Wallys
+#        DEVICE_MODEL := DR5018
+#        DEVICE_VARIANT := C1
+#        BOARD_NAME := ap-mp03.5-c1
+#        BUILD_DTS_ipq5018-mp03.5-c1 := 1
+#        SOC := ipq5018
+#        KERNEL_INSTALL := 1
+#        KERNEL_SIZE := 6096k
+#        IMAGE_SIZE := 25344k
+#        IMAGE/sysupgrade.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | pad-rootfs | append-metadata
+#endef
+#TARGET_DEVICES += $(wallys_dr5018)
 
 #define Device/wallys_dr5018
 #	#$(call Image/Build/Rootfs)
