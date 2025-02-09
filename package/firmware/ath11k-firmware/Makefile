@@ -36,7 +36,7 @@ define Download/$(ATH11K_LEGACY_FW_NAME)
 	PROTO:=git
 	URL:=https://github.com/quic/upstream-wifi-fw.git
 	SOURCE_VERSION:=795809c7041582bd51bdfaa1f548b916ae8d4382
-	MIRROR_HASH:=e042024b6762a5b4fe56f1a5bf8870df2e7abcca90ec22103cd46a609bee7cec
+	MIRROR_HASH:=fefb2cb10f7f9b2a7b1ae0c9830291d60f7e0f620dfd0b94479b34033c1964ec
 	SUBDIR:=$(ATH11K_LEGACY_FW_SUBDIR)
 endef
 
