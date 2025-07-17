@@ -67,7 +67,7 @@ case "$FIRMWARE" in
 		;;
         yuncore,ax830)\
 	wallys,dr5018)
-		caldata_extract "0:ART" 0x26800 0x20000
+		caldata_extract "0:ART" 0x4c000 0x20000
 		label_mac=$(mtd_get_mac_binary 0:ART 0)
 		ath11k_patch_mac $(macaddr_add $label_mac 3) 0
 		ath11k_remove_regdomain
