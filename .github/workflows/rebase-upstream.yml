@@ -3,22 +3,23 @@ name: Rebase Upstream
 
 on:
   schedule:
-    - cron: "0 14 * * 1"  # every Monday at 14:00 UTC
-  workflow_dispatch:       # allow manual triggering
+    - cron: "0 14 * * 1" # every Monday at 14:00 UTC
+  workflow_dispatch:
 
 jobs:
   sync:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout current repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 10  # must be greater than the number of local commits
+          fetch-depth: 10
 
       - name: Rebase onto upstream/main
         uses: imba-tjd/rebase-upstream-action@master
         with:
           upstream: openwrt/openwrt
-          branch: main  # upstream branch to rebase onto
+          branch: main
 
