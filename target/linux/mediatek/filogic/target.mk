@@ -6,6 +6,8 @@ DEFAULT_PACKAGES += fitblk kmod-crypto-hw-safexcel wpad-basic-mbedtls uboot-envt
 KERNELNAME:=Image dtbs
 DEFAULT_PROFILE:=openwrt_one
 
+KERNEL_VER := kernel-6.18-rc2
+
 define Target/Description
 	Build firmware images for MediaTek Filogic ARM based boards.
 endef
