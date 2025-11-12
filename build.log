@@ -1,0 +1,86 @@
+WARNING: Makefile 'package/feeds/packages/fail2ban/Makefile' has a dependency on 'python3-distutils', which does not exist
+WARNING: Makefile 'package/feeds/packages/flent/Makefile' has a dependency on 'python3-distutils', which does not exist
+WARNING: Makefile 'package/feeds/packages/python-babel/Makefile' has a dependency on 'python3-distutils', which does not exist
+WARNING: Makefile 'package/feeds/packages/python-docker/Makefile' has a dependency on 'python3-distutils', which does not exist
+WARNING: Makefile 'package/feeds/packages/python-eventlet/Makefile' has a dependency on 'python3-distutils', which does not exist
+WARNING: Makefile 'package/feeds/packages/python-incremental/Makefile' has a dependency on 'python3-distutils', which does not exist
+WARNING: Makefile 'package/feeds/packages/python3/Makefile' has a dependency on 'python3-lib2to3', which does not exist
+make[2]: Entering directory '/home/kimocoder/Downloads/openwrt/scripts/config'
+make[2]: 'conf' is up to date.
+make[2]: Leaving directory '/home/kimocoder/Downloads/openwrt/scripts/config'
+make[1]: Entering directory '/home/kimocoder/Downloads/openwrt'
+make[2]: Entering directory '/home/kimocoder/Downloads/openwrt'
++ mkdir -p /home/kimocoder/Downloads/openwrt/staging_dir/target-aarch64_cortex-a53_musl
++ cd /home/kimocoder/Downloads/openwrt/staging_dir/target-aarch64_cortex-a53_musl
++ mkdir -p bin lib stamp usr/include usr/lib
+mkdir -p /home/kimocoder/Downloads/openwrt/build_dir/target-aarch64_cortex-a53_musl/stamp
+touch /home/kimocoder/Downloads/openwrt/staging_dir/target-aarch64_cortex-a53_musl/.prepared
+make[3]: Entering directory '/home/kimocoder/Downloads/openwrt/toolchain/gdb'
+make[3]: Nothing to be done for 'compile'.
+make[3]: Leaving directory '/home/kimocoder/Downloads/openwrt/toolchain/gdb'
+time: toolchain/gdb/compile#0.01#0.00#0.03
+make[3]: Entering directory '/home/kimocoder/Downloads/openwrt/toolchain/binutils'
+make[3]: Nothing to be done for 'compile'.
+make[3]: Leaving directory '/home/kimocoder/Downloads/openwrt/toolchain/binutils'
+time: toolchain/binutils/compile#0.01#0.01#0.03
+make[3]: Entering directory '/home/kimocoder/Downloads/openwrt/toolchain/gcc/initial'
+make[3]: Nothing to be done for 'compile'.
+make[3]: Leaving directory '/home/kimocoder/Downloads/openwrt/toolchain/gcc/initial'
+time: toolchain/gcc/initial/compile#0.01#0.01#0.03
+make[3]: Entering directory '/home/kimocoder/Downloads/openwrt/toolchain/kernel-headers'
+rm -rf /home/kimocoder/Downloads/openwrt/build_dir/toolchain-aarch64_cortex-a53_gcc-14.3.0_musl/linux-*
+xzcat /home/kimocoder/Downloads/openwrt/dl/linux-6.17.7.tar.xz | tar -C /home/kimocoder/Downloads/openwrt/build_dir/toolchain-aarch64_cortex-a53_gcc-14.3.0_musl -xf -
+cp -fpR "/home/kimocoder/Downloads/openwrt/target/linux/generic/files"/. /home/kimocoder/Downloads/openwrt/build_dir/toolchain-aarch64_cortex-a53_gcc-14.3.0_musl/linux-6.17.7/
+find /home/kimocoder/Downloads/openwrt/build_dir/toolchain-aarch64_cortex-a53_gcc-14.3.0_musl/linux-6.17.7/ -name \*.rej -or -name \*.orig | xargs -r rm -f
+if [ -d /home/kimocoder/Downloads/openwrt/target/linux/generic/patches ]; then echo "generic patches directory is present. please move your patches to the pending directory" ; exit 1; fi
+
+Applying /home/kimocoder/Downloads/openwrt/target/linux/generic/backport-6.17/402-v6.18-mtd-nand-move-chunk-to-core.patch using plaintext: 
+patching file drivers/mtd/nand/core.c
+patching file drivers/mtd/nand/raw/nand_base.c
+patching file include/linux/mtd/nand.h
+patching file include/linux/mtd/rawnand.h
+
+Applying /home/kimocoder/Downloads/openwrt/target/linux/generic/backport-6.17/731-v6.18-net-mediatek-wed-Introduce-MT7992-WED-support-to-MT7.patch using plaintext: 
+patching file drivers/net/ethernet/mediatek/mtk_wed.c
+Hunk #6 succeeded at 2334 (offset -12 lines).
+patching file drivers/net/ethernet/mediatek/mtk_wed.h
+patching file include/linux/soc/mediatek/mtk_wed.h
+
+Applying /home/kimocoder/Downloads/openwrt/target/linux/generic/backport-6.17/732-v6.18-wifi-mt76-wed-use-proper-wed-reference-in-mt76-wed-d.patch using plaintext: 
+patching file include/linux/soc/mediatek/mtk_wed.h
+
+Applying /home/kimocoder/Downloads/openwrt/target/linux/generic/backport-6.17/781-28-v6.18-net-phy-realtek-convert-RTL8226-CG-to-c45-only.patch using plaintext: 
+patching file drivers/net/phy/realtek/realtek_main.c
+Hunk #1 succeeded at 1279 (offset 5 lines).
+Hunk #2 succeeded at 1689 (offset 14 lines).
+
+Applying /home/kimocoder/Downloads/openwrt/target/linux/generic/backport-6.17/781-29-v6.18-net-phy-realtek-enable-serdes-option-mode-for-RTL8226-CG.patch using plaintext: 
+patching file drivers/net/phy/realtek/realtek_main.c
+Hunk #1 succeeded at 1037 (offset 5 lines).
+Hunk #2 succeeded at 1072 (offset 5 lines).
+Hunk #3 succeeded at 1097 (offset 5 lines).
+Hunk #4 succeeded at 1705 (offset 14 lines).
+
+Applying /home/kimocoder/Downloads/openwrt/target/linux/generic/backport-6.17/783-01-v6.18-net-dsa-Move-KS8995-to-the-DSA-subsystem.patch using plaintext: 
+patching file drivers/net/dsa/Kconfig
+Hunk #1 succeeded at 99 (offset 1 line).
+patching file drivers/net/dsa/Makefile
+patching file drivers/net/phy/Kconfig
+Hunk #1 succeeded at 465 (offset 22 lines).
+patching file drivers/net/phy/Makefile
+Hunk #1 succeeded at 72 with fuzz 1 (offset -5 lines).
+patching file drivers/net/dsa/ks8995.c
+patching file drivers/net/phy/spi_ks8995.c
+Hunk #1 FAILED at 1.
+Not deleting file drivers/net/phy/spi_ks8995.c as content differs from patch
+1 out of 1 hunk FAILED -- saving rejects to file drivers/net/phy/spi_ks8995.c.rej
+Patch failed!  Please fix /home/kimocoder/Downloads/openwrt/target/linux/generic/backport-6.17/783-01-v6.18-net-dsa-Move-KS8995-to-the-DSA-subsystem.patch!
+make[3]: *** [Makefile:125: /home/kimocoder/Downloads/openwrt/build_dir/toolchain-aarch64_cortex-a53_gcc-14.3.0_musl/linux-6.17.7/.prepared] Error 1
+make[3]: Leaving directory '/home/kimocoder/Downloads/openwrt/toolchain/kernel-headers'
+time: toolchain/kernel-headers/compile#5.99#2.11#1.65
+    ERROR: toolchain/kernel-headers failed to build.
+make[2]: *** [toolchain/Makefile:93: toolchain/kernel-headers/compile] Error 1
+make[2]: Leaving directory '/home/kimocoder/Downloads/openwrt'
+make[1]: *** [toolchain/Makefile:89: /home/kimocoder/Downloads/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-14.3.0_musl/stamp/.toolchain_compile] Error 2
+make[1]: Leaving directory '/home/kimocoder/Downloads/openwrt'
+make: *** [/home/kimocoder/Downloads/openwrt/include/toplevel.mk:233: world] Error 2
